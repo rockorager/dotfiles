@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Check if the required argument is provided
+if [ $# -ne 2 ] || [ "$1" != "read" ]; then
+    echo "Usage: $0 read op://some/path"
+    exit 1
+fi
+
+# Extract the path from the op:// URL
+url=$2
+temp_file="/tmp/${url#op://}"
+
+# Ensure the directory for the temporary file exists
+mkdir -p "$(dirname "$temp_file")"
+
+# Check if the file exists
+if [ -f "$temp_file" ]; then
+    cat "$temp_file"
+else
+    op read "$url" > "$temp_file" && cat "$temp_file"
+fi
