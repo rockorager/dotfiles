@@ -1,0 +1,3 @@
+#!/bin/sh
+
+wf-recorder --geometry "$(slurp)" -f ~/recording.mp4 --overwrite

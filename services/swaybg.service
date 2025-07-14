@@ -1,0 +1,11 @@
+[Unit]
+Description=Start wbg
+After=sway-session.target
+
+[Service]
+Type=simple
+ExecStart=swaybg --image %h/.local/share/backgrounds/tokyonight.jpg
+Restart=always
+
+[Install]
+WantedBy=sway-session.target

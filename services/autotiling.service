@@ -1,0 +1,11 @@
+[Unit]
+Description=autotiling
+After=sway-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/autotiling-rs
+Restart=always
+
+[Install]
+WantedBy=sway-session.target

@@ -1,0 +1,150 @@
+# Variables
+set $mod Mod4
+set $left h
+set $down j
+set $up k
+set $right l
+
+set $accent #c0caf5
+
+# Systemd setup
+exec $HOME/.local/bin/sway-session.sh
+exec $HOME/.local/bin/sway-assign-cgroups.py
+
+
+
+client.focused $accent $accent $accent $accent
+default_border pixel 2
+smart_borders on
+
+input "type:touchpad" {
+	dwt enabled
+	click_method clickfinger
+	tap enabled
+	natural_scroll disabled
+	scroll_factor 0.5
+}
+
+input "type:keyboard" {
+	repeat_delay 180
+	repeat_rate 60
+	xkb_layout us
+}
+
+### Key bindings
+
+# Programs
+bindsym $mod+Return exec gdbus call --session --dest com.mitchellh.ghostty --object-path /com/mitchellh/ghostty --method org.gtk.Actions.Activate new-window [] []
+bindsym $mod+p exec /usr/bin/1password --quick-access
+bindsym $mod+Space exec fuzzel
+bindsym $mod+q kill
+
+bindsym Print exec grimshot save anything - | gradia
+
+# Window rules
+## Default floats
+for_window [app_id="float"] floating enable
+for_window [app_id="launcher"] floating enable
+for_window [app_id="pavucontrol"] floating enable
+for_window [app_id="zoom"] floating enable
+## Inhibit idle when firefox is fullscreen
+for_window [app_id="firefox"] inhibit_idle fullscreen
+
+# Window manipulation
+floating_modifier $mod normal
+bindsym $mod+f fullscreen
+bindsym $mod+Shift+space floating toggle
+
+# Misc
+bindsym $mod+Shift+e exec powermenu
+bindsym $mod+Shift+c reload
+
+# Scratchpad
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+# Brightness
+bindsym --locked XF86MonBrightnessDown exec brightnessctl -e4 -n2 set 5%-
+bindsym --locked XF86MonBrightnessUp exec brightnessctl -e4 -n2 set 5%+
+bindsym --locked XF86KbdBrightnessUp   exec brightnessctl --device='smc::kbd_backlight' set 20%+
+bindsym --locked XF86KbdBrightnessDown exec brightnessctl --device='smc::kbd_backlight' set 20%-
+
+# Volume
+bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
+
+# Microphone
+bindsym --locked Shift+XF86AudioMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym --locked Shift+XF86AudioLowerVolume exec pactl set-source-volume @DEFAULT_SOURCE@ -5%
+bindsym --locked Shift+XF86AudioRaiseVolume exec pactl set-source-volume @DEFAULT_SOURCE@ +5%
+
+# Media buttons
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# Moving around:
+
+# Move your focus around
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+# Or use $mod+[up|down|left|right]
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move the focused window with the same, but add Shift
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+# Ditto, with arrow keys
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Workspaces:
+
+# Next workspace
+
+bindsym alt+tab workspace back_and_forth
+
+# Switch to workspace
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+
+# GTK
+## Set default cursor theme
+exec gsettings set org.gnome.desktop.interface cursor-theme Adwaita
+## Set default theme
+exec gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+## Set prefers dark
+exec gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+
+
+include /etc/sway/config.d/*

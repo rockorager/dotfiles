@@ -1,0 +1,23 @@
+#!/usr/bin/fish
+
+function show_power_menu
+    set menu_options "Logout\0icon\x1fsystem-log-out-symbolic
+Restart\0icon\x1fsystem-reboot-symbolic
+Shutdown\0icon\x1fsystem-shutdown-symbolic"
+    set selection (echo -e $menu_options | fuzzel \
+      --dmenu \
+      --lines=4 \
+      --width=16
+  )
+
+    switch "$selection"
+        case Logout
+            loginctl terminate-user $USER
+        case "*Restart*"
+            systemctl reboot
+        case "*Shutdown*"
+            systemctl poweroff
+    end
+end
+
+show_power_menu

@@ -1,0 +1,123 @@
+{
+	"ipc": true,
+	"spacing": 2,
+	"modules-left": [
+		"sway/workspaces",
+		"sway/mode",
+		"custom/media"
+	],
+	"modules-center": [
+		"clock"
+	],
+	"modules-right": [
+		"tray",
+		"pulseaudio",
+		"pulseaudio#source",
+		"network",
+		"cpu",
+		"backlight",
+		"battery"
+	],
+	"sway/mode": {
+		"format": "<span style=\"italic\">{}</span>"
+	},
+	"tray": {
+		"spacing": 10
+	},
+	"clock": {
+		"format": "{:%a %b %d  %I:%M %p}",
+		"on-click": "gnome-calendar"
+	},
+	"cpu": {
+		"format": "{load}% 󰆼",
+		"tooltip": false,
+		"on-click": "xdg-terminal-exec btop"
+	},
+	"backlight": {
+		"format": "{percent}% {icon}",
+		"format-icons": [
+			"󰃚",
+			"󰃛",
+			"󰃜",
+			"󰃝",
+			"󰃞",
+			"󰃟",
+			"󰃠"
+		]
+	},
+	"battery": {
+		"states": {
+			"warning": 30,
+			"critical": 15
+		},
+		"format": "{capacity}% {icon} ",
+		"format-charging": "{capacity}% 󰚥",
+		"format-plugged": "{capacity}% ",
+		"format-alt": "{time} {icon}",
+		"format-icons": [
+			"󰂎",
+			"󰁺",
+			"󰁻",
+			"󰁼",
+			"󰁽",
+			"󰁾",
+			"󰁼",
+			"󰁿",
+			"󰂀",
+			"󰂁",
+			"󰂂",
+			"󰁹"
+		]
+	},
+	"network": {
+		"format-wifi": "{signalStrength}% 󰖩",
+		"format-ethernet": "{ipaddr}/{cidr} 󰈀",
+		"tooltip-format": "{essid}",
+		"format-linked": "{ifname} (No IP) ",
+		"format-disconnected": "Disconnected ⚠",
+		"on-click": "foot --class='launcher' nmtui connect"
+	},
+	"pulseaudio": {
+		"format": "{volume}% {icon}",
+		"format-bluetooth": "{volume}% {icon} ",
+		"format-bluetooth-muted": "󰝟 {icon}",
+		"format-muted": "󰝟 ",
+		"format-icons": {
+			"headphone": "",
+			"hands-free": "",
+			"headset": "",
+			"phone": "",
+			"portable": "",
+			"car": "",
+			"default": [
+				"",
+				"",
+				""
+			]
+		},
+		"on-click": "pavucontrol"
+	},
+	"pulseaudio#source": {
+		"format": "{format_source}",
+		"format-bluetooth": "{format_source} ",
+		"format-bluetooth-muted": "{format_source}",
+		"format-source": "{volume}% 󰍬",
+		"format-source-muted": "󰍭",
+		"format-icons": {
+			"headphone": "",
+			"hands-free": "",
+			"headset": "",
+			"phone": "",
+			"portable": "",
+			"car": "",
+			"default": [
+				"",
+				"",
+				""
+			]
+		},
+		"on-click": "pavucontrol"
+	},
+	"escape": true,
+	"exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null"
+}
