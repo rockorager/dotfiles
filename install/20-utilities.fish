@@ -19,6 +19,8 @@ yay -S --noconfirm --needed \
     wf-recorder \
     wireplumber \
     wl-clipboard \
-    xorg-xwayland
+    xorg-xwayland \
+    zen-browser-bin
 
 systemctl enable --now --user 1password.service
+echo zen-bin | sudo tee /etc/1password/custom_allowed_browsers
