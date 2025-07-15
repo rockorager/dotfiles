@@ -75,7 +75,7 @@
 		"tooltip-format": "{essid}",
 		"format-linked": "{ifname} (No IP) ",
 		"format-disconnected": "Disconnected ⚠",
-		"on-click": "foot --class='launcher' nmtui connect"
+		"on-click": "foot --app-id='launcher' impala"
 	},
 	"pulseaudio": {
 		"format": "{volume}% {icon}",
