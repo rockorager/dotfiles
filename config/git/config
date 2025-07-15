@@ -1,0 +1,31 @@
+[init]
+  defaultBranch = main
+
+[commit]
+  verbose = true
+  gpgpsign = true
+
+[gpg]
+  format = ssh
+
+[log]
+  decorate = true
+  follow = true
+
+[pull]
+  rebase = true
+
+[rebase]
+  autosquash = true
+
+[core]
+  abbrev = 12
+
+[rerere]
+  enabled = true
+
+[alias]
+  lo = log --oneline
+  co = checkout
+  cob = checkout -b
+
