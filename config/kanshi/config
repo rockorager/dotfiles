@@ -1,0 +1,8 @@
+profile "laptop" {
+  output eDP-1 enable position 0,0
+}
+
+profile "dock" {
+  output DP-10  position 0,0
+  output eDP-1 disable
+}
