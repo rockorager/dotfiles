@@ -22,6 +22,7 @@ yay -S --noconfirm --needed \
 sudo systemctl enable gdm.service
 
 systemctl enable --now --user autotiling.service
+systemctl enable --now --user kanshi.service
 systemctl enable --now --user mako.service
 systemctl enable --now --user polkit-gnome.service
 systemctl enable --now --user swaybg.service
