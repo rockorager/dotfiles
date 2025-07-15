@@ -1,0 +1,5 @@
+#!/bin/sh
+
+printf "\nUpdating dotfiles..."
+git -C $HOME/.local/share/dotfiles/ pull
+fish $HOME/.local/share/dotfiles/install.fish
