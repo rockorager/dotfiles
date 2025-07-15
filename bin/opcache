@@ -1,21 +1,28 @@
-#!/bin/sh
+#!/usr/bin/fish
 
-# Check if the required argument is provided
-if [ $# -ne 2 ] || [ "$1" != "read" ]; then
-    echo "Usage: $0 read op://some/path"
+# Check if the required arguments are provided
+if test (count $argv) -ne 2; or test "$argv[1]" != read
+    echo "Usage: $argv[0] read op://some/path"
     exit 1
-fi
+end
 
 # Extract the path from the op:// URL
-url=$2
-temp_file="/tmp/${url#op://}"
+set url $argv[2]
+set temp_file "/tmp/"(string replace "op://" "" $url)
 
 # Ensure the directory for the temporary file exists
-mkdir -p "$(dirname "$temp_file")"
+mkdir -p (dirname $temp_file)
 
 # Check if the file exists
-if [ -f "$temp_file" ]; then
-    cat "$temp_file"
+if test -f $temp_file
+    cat $temp_file
 else
-    op read "$url" > "$temp_file" && cat "$temp_file"
-fi
+    # Read from op first, only create temp file if successful
+    set content (op read $url)
+    if test $status -eq 0
+        echo $content >$temp_file
+        echo $content
+    else
+        exit $status
+    end
+end
