@@ -7,12 +7,8 @@ sudo pacman -S --needed --noconfirm \
   fish \
   git
 
-rm -rf ~/.local/share/dotfiles/
-git clone https://github.com/rockorager/dotfiles ~/.local/share/dotfiles
-
-cd ~/.local/share/dotfiles
-git fetch origin installer && git checkout installer
-cd ~
+rm -rf $HOME/.local/share/dotfiles/
+git clone https://github.com/rockorager/dotfiles $HOME/.local/share/dotfiles
 
 printf "\nInstallation starting..."
-fish ~/.local/share/dotfiles/install.fish
+fish $HOME/.local/share/dotfiles/install.fish
