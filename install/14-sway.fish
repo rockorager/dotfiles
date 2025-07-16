@@ -14,6 +14,7 @@ yay -S --noconfirm --needed \
     sway \
     swaybg \
     swayidle \
+    sway-contrib \
     sway-systemd \
     waybar \
     xdg-desktop-portal \
@@ -27,3 +28,6 @@ systemctl enable --now --user mako.service
 systemctl enable --now --user polkit-gnome.service
 systemctl enable --now --user swaybg.service
 systemctl enable --now --user waybar.service
+
+sudo ln -s /usr/share/sway-contrib/grimshot /usr/bin/grimshot
+sudo ln -s /usr/share/sway-contrib/grimpicker /usr/bin/grimpicker
