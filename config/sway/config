@@ -47,6 +47,7 @@ for_window [app_id="float"] floating enable
 for_window [app_id="launcher"] floating enable
 for_window [app_id="pavucontrol"] floating enable
 for_window [app_id="zoom"] floating enable
+for_window [app_id="blueman-manager"] floating enable
 ## Inhibit idle when firefox is fullscreen
 for_window [app_id="firefox"] inhibit_idle fullscreen
 
