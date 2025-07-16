@@ -10,6 +10,7 @@ yay -S --noconfirm --needed \
     imv \
     less \
     libnotify \
+    libreoffice-fresh \
     lsr-iouring-git \
     man \
     mpv \
