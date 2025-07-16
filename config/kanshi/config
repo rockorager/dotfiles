@@ -6,3 +6,8 @@ profile "dock" {
   output DP-10  position 0,0
   output eDP-1 disable
 }
+
+profile "office" {
+  output HDMI-A-1  position 0,0
+  output eDP-1 disable
+}
