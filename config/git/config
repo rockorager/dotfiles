@@ -29,3 +29,5 @@
   co = checkout
   cob = checkout -b
 
+[include]
+  path = user
