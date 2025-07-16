@@ -7,12 +7,6 @@ set $right l
 
 set $accent #c0caf5
 
-# Systemd setup
-exec $HOME/.local/bin/sway-session.sh
-exec $HOME/.local/bin/sway-assign-cgroups.py
-
-
-
 client.focused $accent $accent $accent $accent
 default_border pixel 2
 smart_borders on
