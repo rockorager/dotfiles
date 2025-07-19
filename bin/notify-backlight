@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Get current brightness level as percentage
+brightness=$(brightnessctl | grep -Po '\d+(?=%)' | head -1)
+
+# Send notification with mako hint for progress bar
+notify-send --app-name wp-brightness \
+    "" \
+    "" \
+    --icon=display-brightness-high \
+    --hint=string:x-canonical-private-synchronous:backlight \
+    --hint=int:value:"$brightness"

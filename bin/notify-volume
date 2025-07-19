@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Get current volume level
+volume=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -Po '\d+(?=%)' | head -1)
+
+# Send notification with mako hint for progress bar
+notify-send --app-name wp-vol \
+    "" \
+    "" \
+    --icon=audio-volume-high \
+    --hint=string:x-canonical-private-synchronous:volume \
+    --hint=int:value:"$volume"
