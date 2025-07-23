@@ -5,6 +5,7 @@ abbr vim nvim
 # ls shortcuts
 abbr ls lsr
 abbr ll 'lsr --almost-all --long'
+abbr lt 'lsr --tree'
 
 # prompt colors
 set -g hydro_color_prompt magenta
