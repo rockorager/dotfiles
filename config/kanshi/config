@@ -11,3 +11,8 @@ profile "office" {
   output HDMI-A-1  position 0,0
   output eDP-1 disable
 }
+
+profile "home" {
+  output DP-1 enable position 0,0 scale 1.5
+  output eDP-1 disable
+}
