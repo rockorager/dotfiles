@@ -31,5 +31,12 @@ systemctl enable --now --user swaybg.service
 systemctl enable --now --user swayidle.service
 systemctl enable --now --user waybar.service
 
+# Lid close behavior: suspend on battery, ignore when docked/external power
+sudo mkdir -p /etc/systemd/logind.conf.d
+echo "[Login]
+HandleLidSwitch=suspend
+HandleLidSwitchExternalPower=ignore
+HandleLidSwitchDocked=ignore" | sudo tee /etc/systemd/logind.conf.d/lid.conf
+
 sudo ln -s /usr/share/sway-contrib/grimshot /usr/bin/grimshot
 sudo ln -s /usr/share/sway-contrib/grimpicker /usr/bin/grimpicker
