@@ -21,9 +21,6 @@ yay -S --noconfirm --needed \
     wireplumber \
     wl-clipboard \
     xorg-xwayland \
-    zen-browser-bin
+    chromium
 
 systemctl enable --now --user 1password.service
-
-sudo mkdir -p /etc/1password
-echo zen-bin | sudo tee /etc/1password/custom_allowed_browsers
