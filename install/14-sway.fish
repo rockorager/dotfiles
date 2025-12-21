@@ -13,6 +13,7 @@ yay -S --noconfirm --needed \
     slurp \
     sway \
     swaybg \
+    swaylock \
     swayidle \
     sway-contrib \
     sway-systemd \
@@ -27,6 +28,7 @@ systemctl enable --now --user kanshi.service
 systemctl enable --now --user mako.service
 systemctl enable --now --user polkit-gnome.service
 systemctl enable --now --user swaybg.service
+systemctl enable --now --user swayidle.service
 systemctl enable --now --user waybar.service
 
 sudo ln -s /usr/share/sway-contrib/grimshot /usr/bin/grimshot

@@ -17,6 +17,7 @@ yay -S --noconfirm --needed \
     pavucontrol \
     playerctl \
     ripgrep \
+    slack-desktop-wayland \
     wf-recorder \
     wireplumber \
     wl-clipboard \
