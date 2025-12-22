@@ -43,11 +43,7 @@ return {
     "folke/lazydev.nvim",
     ft = "lua",
     cmd = "LazyDev",
-    opts = {
-      library = {
-        { path = "/home/tim/.local/share/comlink/lua/comlink.lua", mods = { "comlink" } },
-      },
-    },
+    opts = {},
   },
 
   {

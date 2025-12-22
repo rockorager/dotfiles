@@ -3,7 +3,6 @@ yay -S --noconfirm --needed \
     1password-cli \
     brightnessctl \
     btop \
-    comlink-git \
     discord \
     fd \
     github-cli \
