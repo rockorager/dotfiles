@@ -21,3 +21,6 @@ set fish_pager_color_progress brblack '--background=cyan'
 
 # add 1password completions
 op completion fish | source
+
+# activate mise
+mise activate fish | source
