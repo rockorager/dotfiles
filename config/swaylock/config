@@ -1,0 +1,44 @@
+# Tokyo Night themed swaylock config
+
+# Background
+image=~/.local/share/dotfiles/backgrounds/tokyonight.jpg
+scaling=fill
+
+# Ring
+indicator-radius=100
+indicator-thickness=10
+
+# Colors (Tokyo Night palette)
+inside-color=1a1b26cc
+ring-color=c0caf5
+line-color=00000000
+key-hl-color=7aa2f7
+bs-hl-color=f7768e
+separator-color=00000000
+
+# Typing state
+inside-ver-color=1a1b26cc
+ring-ver-color=7aa2f7
+line-ver-color=00000000
+
+# Wrong password
+inside-wrong-color=1a1b26cc
+ring-wrong-color=f7768e
+line-wrong-color=00000000
+text-wrong-color=f7768e
+
+# Cleared
+inside-clear-color=1a1b26cc
+ring-clear-color=bb9af7
+line-clear-color=00000000
+text-clear-color=bb9af7
+
+# Text
+text-color=c0caf5
+font=sans-serif
+font-size=24
+
+# Behavior
+ignore-empty-password
+show-failed-attempts
+daemonize

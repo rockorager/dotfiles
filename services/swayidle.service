@@ -7,9 +7,11 @@ After=sway-session.target
 [Service]
 Type=simple
 ExecStart=/usr/bin/swayidle -w \
+    timeout 60  'brightnessctl -d tpacpi::kbd_backlight set 0' \
+        resume  'brightnessctl -d tpacpi::kbd_backlight set 100%%' \
     timeout 300 'swaylock -f' \
     timeout 600 'swaymsg "output * power off"' \
-    resume 'swaymsg "output * power on"' \
+        resume  'swaymsg "output * power on"' \
     before-sleep 'swaylock -f'
 Restart=always
 
