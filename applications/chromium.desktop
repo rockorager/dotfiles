@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Chromium
+Exec=/usr/bin/chromium --enable-features=UseOzonePlatform --ozone-platform=wayland %U
+Terminal=false
+Type=Application
+Icon=chromium
+StartupWMClass=chromium
+Categories=Network;WebBrowser;
+MimeType=text/html;text/xml;application/xhtml+xml;application/xml;x-scheme-handler/http;x-scheme-handler/https;
