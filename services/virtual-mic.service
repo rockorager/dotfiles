@@ -1,0 +1,13 @@
+[Unit]
+Description=Virtual microphone for OBS audio preprocessing
+PartOf=pipewire.service
+Requires=pipewire.service
+After=pipewire.service
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/share/dotfiles/bin/virtual-mic
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target
