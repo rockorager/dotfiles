@@ -7,7 +7,10 @@ if not grep -q pam_fprintd.so /etc/pam.d/sudo
 end
 
 # Configure PAM for polkit (used by 1Password)
-if not grep -q pam_fprintd.so /etc/pam.d/polkit-1
+# The file doesn't exist by default on Arch (vendor default is in /usr/lib/pam.d/)
+if not test -f /etc/pam.d/polkit-1
+    sudo cp ~/.local/share/dotfiles/config/pam.d/polkit-1 /etc/pam.d/polkit-1
+else if not grep -q pam_fprintd.so /etc/pam.d/polkit-1
     sudo sed -i '/^auth.*include.*system-auth/i auth      sufficient pam_fprintd.so' /etc/pam.d/polkit-1
 end
 
