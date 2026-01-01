@@ -12,7 +12,8 @@ ExecStart=/usr/bin/swayidle -w \
     timeout 300 'swaylock -f' \
     timeout 600 'swaymsg "output * power off"' \
         resume  'swaymsg "output * power on"' \
-    before-sleep 'swaylock -f'
+    before-sleep 'echo "suspend: $(awk "BEGIN {printf \\"%%.2f\\", $(cat /sys/class/power_supply/BAT*/energy_now) / $(cat /sys/class/power_supply/BAT*/energy_full) * 100}")%% $(date)" >> /tmp/suspend.log; bluetoothctl power off; swaylock -f' \
+    after-resume 'echo "resume:  $(awk "BEGIN {printf \\"%%.2f\\", $(cat /sys/class/power_supply/BAT*/energy_now) / $(cat /sys/class/power_supply/BAT*/energy_full) * 100}")%% $(date)" >> /tmp/suspend.log; bluetoothctl power on'
 Restart=always
 
 [Install]

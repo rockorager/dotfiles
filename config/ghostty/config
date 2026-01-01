@@ -4,7 +4,7 @@ font-family = Adwaita Mono
 theme=light:TokyoNight Day,dark:TokyoNight
 
 confirm-close-surface = false
-background-opacity = 0.8
+#background-opacity = 0.8
 
 shell-integration-features=no-cursor
 cursor-style-blink=false
