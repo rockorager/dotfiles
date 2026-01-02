@@ -1,6 +1,7 @@
 yay -S --noconfirm --needed \
     adwaita-cursors \
     autotiling-rs \
+    foot \
     fuzzel \
     gdm \
     gnome-themes-extra \
