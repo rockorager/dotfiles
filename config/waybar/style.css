@@ -91,6 +91,7 @@ button:hover {
 #mpd {
     padding: 0 10px;
     color: @bg-dark;
+    border-radius: 8px;
 }
 
 #window,
@@ -119,6 +120,10 @@ button:hover {
 
 #battery.charging, #battery.plugged {
     background-color: @green2;
+}
+
+#battery.warning {
+    background-color: #e0af68;
 }
 
 @keyframes blink {

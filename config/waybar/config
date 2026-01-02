@@ -3,8 +3,7 @@
 	"spacing": 2,
 	"modules-left": [
 		"sway/workspaces",
-		"sway/mode",
-		"custom/media"
+		"sway/mode"
 	],
 	"modules-center": [
 		"clock"
@@ -31,10 +30,11 @@
 	"cpu": {
 		"format": "{load}% 󰆼",
 		"tooltip": false,
-		"on-click": "xdg-terminal-exec btop"
+		"on-click": "foot --app-id='launcher' btop"
 	},
 	"backlight": {
 		"format": "{percent}% {icon}",
+		"tooltip": false,
 		"format-icons": [
 			"󰃚",
 			"󰃛",
@@ -54,6 +54,7 @@
 		"format-charging": "{capacity}% 󰚥",
 		"format-plugged": "{capacity}% ",
 		"format-alt": "{time} {icon}",
+		"tooltip": false,
 		"format-icons": [
 			"󰂎",
 			"󰁺",
@@ -61,7 +62,6 @@
 			"󰁼",
 			"󰁽",
 			"󰁾",
-			"󰁼",
 			"󰁿",
 			"󰂀",
 			"󰂁",
@@ -79,6 +79,7 @@
 	},
 	"pulseaudio": {
 		"format": "{volume}% {icon}",
+		"tooltip": false,
 		"format-bluetooth": "{volume}% {icon} ",
 		"format-bluetooth-muted": "󰝟 {icon}",
 		"format-muted": "󰝟 ",
@@ -99,6 +100,7 @@
 	},
 	"pulseaudio#source": {
 		"format": "{format_source}",
+		"tooltip": false,
 		"format-bluetooth": "{format_source} ",
 		"format-bluetooth-muted": "{format_source}",
 		"format-source": "{volume}% 󰍬",
@@ -117,7 +119,5 @@
 			]
 		},
 		"on-click": "pavucontrol"
-	},
-	"escape": true,
-	"exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null"
+	}
 }
