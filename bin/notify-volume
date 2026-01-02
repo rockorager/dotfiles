@@ -1,12 +1,19 @@
 #!/bin/sh
 
-# Get current volume level
+# Get current volume level and mute status
 volume=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -Po '\d+(?=%)' | head -1)
+muted=$(pactl get-sink-mute @DEFAULT_SINK@ | grep -Po '(?<=Mute: )\w+')
+
+if [ "$muted" = "yes" ]; then
+    icon="audio-volume-muted"
+else
+    icon="audio-volume-high"
+fi
 
 # Send notification with mako hint for progress bar
 notify-send --app-name wp-vol \
     "" \
     "" \
-    --icon=audio-volume-high \
+    --icon="$icon" \
     --hint=string:x-canonical-private-synchronous:volume \
     --hint=int:value:"$volume"
