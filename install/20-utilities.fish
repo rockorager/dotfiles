@@ -21,6 +21,7 @@ yay -S --noconfirm --needed \
     wireplumber \
     wl-clipboard \
     xorg-xwayland \
-    chromium
+    chromium \
+    chromium-widevine
 
 systemctl enable --now --user 1password.service
