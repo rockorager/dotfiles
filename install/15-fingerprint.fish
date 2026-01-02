@@ -14,6 +14,11 @@ else if not grep -q pam_fprintd.so /etc/pam.d/polkit-1
     sudo sed -i '/^auth.*include.*system-auth/i auth      sufficient pam_fprintd.so' /etc/pam.d/polkit-1
 end
 
+# Configure PAM for swaylock
+if not grep -q pam_fprintd.so /etc/pam.d/swaylock
+    sudo sed -i '/^auth.*include.*login/i auth      sufficient pam_fprintd.so' /etc/pam.d/swaylock
+end
+
 # Enable and start fprintd service
 sudo systemctl enable --now fprintd.service
 

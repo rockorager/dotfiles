@@ -4,9 +4,10 @@
 image=~/.local/share/dotfiles/backgrounds/tokyonight.jpg
 scaling=fill
 
-# Ring
-indicator-radius=100
-indicator-thickness=10
+# Ring - always visible
+indicator-idle-visible
+indicator-radius=120
+indicator-thickness=12
 
 # Colors (Tokyo Night palette)
 inside-color=1a1b26cc
@@ -39,6 +40,6 @@ font=sans-serif
 font-size=24
 
 # Behavior
-ignore-empty-password
+
 show-failed-attempts
 daemonize
