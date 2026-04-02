@@ -3,4 +3,5 @@ yay -S --noconfirm --needed \
     noto-fonts \
     noto-fonts-emoji \
     ttf-font-awesome \
-    ttf-nerd-fonts-symbols
+    ttf-nerd-fonts-symbols \
+    ttf-victor-mono

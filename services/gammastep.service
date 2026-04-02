@@ -1,0 +1,13 @@
+[Unit]
+Description=Color temperature adjustment
+PartOf=sway-session.target
+Requires=sway-session.target
+After=sway-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/gammastep
+Restart=always
+
+[Install]
+WantedBy=sway-session.target

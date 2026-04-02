@@ -1,0 +1,96 @@
+#!/bin/sh
+
+set -eu
+
+id=${1:-}
+
+if [ -z "$id" ]; then
+    exit 1
+fi
+
+notification=$(
+    makoctl list -j |
+        jq -c --argjson id "$id" '.[] | select(.id == $id)' |
+        head -n1
+)
+
+if [ -z "$notification" ]; then
+    exit 0
+fi
+
+if printf '%s\n' "$notification" | jq -e '(.actions // {}) | length > 0' >/dev/null; then
+    makoctl invoke -n "$id" >/dev/null 2>&1 || true
+    makoctl dismiss -n "$id" >/dev/null 2>&1 || true
+    exit 0
+fi
+
+window_id=$(
+    swaymsg -t get_tree |
+        jq -r --argjson notification "$notification" '
+            def norm:
+                ascii_downcase | gsub("[^a-z0-9]+"; "");
+
+            def candidates:
+                [
+                    $notification.desktop_entry,
+                    $notification.app_name,
+                    ($notification.desktop_entry | select(. != null and . != "") | sub("\\.desktop$"; "")),
+                    ($notification.desktop_entry | select(. != null and . != "") | split("/") | last | sub("\\.desktop$"; "")),
+                    ($notification.desktop_entry | select(. != null and . != "") | split(".") | last),
+                    ($notification.app_name | select(. != null and . != "") | ascii_downcase),
+                    ($notification.app_name | select(. != null and . != "") | gsub("[[:space:]]+"; "-")),
+                    ($notification.app_name | select(. != null and . != "") | gsub("[[:space:]]+"; "")),
+                    ($notification.desktop_entry | select(. != null and . != "") | ascii_downcase)
+                ]
+                | map(select(. != null and . != ""))
+                | unique;
+
+            def score_field($field; $weight):
+                if ($field == null or $field == "") then
+                    0
+                else
+                    [
+                        candidates[] as $candidate |
+                        if $field == $candidate then
+                            100 + $weight
+                        elif ($field | ascii_downcase) == ($candidate | ascii_downcase) then
+                            80 + $weight
+                        elif ($field | norm) == ($candidate | norm) then
+                            60 + $weight
+                        else
+                            0
+                        end
+                    ] | max? // 0
+                end;
+
+            [
+                .. | objects
+                | select(.type? == "con")
+                | {
+                    id,
+                    visible: (.visible // false),
+                    focused: (.focused // false),
+                    app_id: (.app_id // null),
+                    class: (.window_properties.class // null),
+                    instance: (.window_properties.instance // null)
+                }
+                | .score = (
+                    score_field(.app_id; 30) +
+                    score_field(.class; 20) +
+                    score_field(.instance; 10) +
+                    (if .visible then 5 else 0 end) +
+                    (if .focused then 1 else 0 end)
+                )
+                | select(.score > 0)
+            ]
+            | sort_by(.score)
+            | reverse
+            | .[0].id // empty
+        '
+)
+
+if [ -n "$window_id" ]; then
+    swaymsg "[con_id=${window_id}]" focus >/dev/null 2>&1 || true
+fi
+
+makoctl dismiss -n "$id" >/dev/null 2>&1 || true

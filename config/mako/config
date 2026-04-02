@@ -19,3 +19,4 @@ border-radius=12
 padding=16
 
 anchor=top-center
+on-button-left=exec ~/.local/share/dotfiles/bin/mako-focus-window "$id"

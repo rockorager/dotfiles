@@ -1,4 +1,4 @@
-yay -S --noconfirm --needed obs-studio
+yay -S --noconfirm --needed obs-studio easyeffects lsp-plugins
 
 mkdir -p ~/.config/systemd/user
 ln -sf ~/.local/share/dotfiles/services/virtual-mic.service ~/.config/systemd/user/
