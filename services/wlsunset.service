@@ -1,0 +1,16 @@
+[Unit]
+Description=Day/night gamma adjustment for Wayland
+Documentation=man:wlsunset(1)
+PartOf=sway-session.target
+After=sway-session.target
+ConditionPathExists=%h/.local/state/location/wlsunset.env
+
+[Service]
+Type=simple
+EnvironmentFile=%h/.local/state/location/wlsunset.env
+ExecCondition=/bin/sh -c '[ -n "$WAYLAND_DISPLAY" ]'
+ExecStart=/usr/bin/wlsunset -l ${WLSUNSET_LAT} -L ${WLSUNSET_LON}
+Restart=on-failure
+
+[Install]
+WantedBy=sway-session.target

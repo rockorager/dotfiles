@@ -20,3 +20,4 @@ padding=16
 
 anchor=top-center
 on-button-left=exec ~/.local/share/dotfiles/bin/mako-focus-window "$id"
+on-touch=exec ~/.local/share/dotfiles/bin/mako-focus-window "$id"

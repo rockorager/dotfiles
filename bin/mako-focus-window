@@ -3,8 +3,16 @@
 set -eu
 
 id=${1:-}
+log_file=${XDG_RUNTIME_DIR:-/tmp}/mako-focus-window.log
+
+log() {
+    printf '%s %s\n' "$(date '+%F %T')" "$*" >>"$log_file"
+}
+
+log "start id=${id:-<empty>}"
 
 if [ -z "$id" ]; then
+    log "missing-id"
     exit 1
 fi
 
@@ -15,11 +23,23 @@ notification=$(
 )
 
 if [ -z "$notification" ]; then
+    log "notification-missing id=$id"
     exit 0
 fi
 
-if printf '%s\n' "$notification" | jq -e '(.actions // {}) | length > 0' >/dev/null; then
-    makoctl invoke -n "$id" >/dev/null 2>&1 || true
+log "notification=$notification"
+
+direct_con_id=$(
+    printf '%s\n' "$notification" |
+        jq -r '
+            .category // ""
+            | capture("^sway-focus:(?<id>[0-9]+)$")?.id // empty
+        '
+)
+
+if [ -n "$direct_con_id" ]; then
+    log "direct-focus con_id=$direct_con_id"
+    swaymsg "[con_id=${direct_con_id}]" focus >/dev/null 2>&1 || true
     makoctl dismiss -n "$id" >/dev/null 2>&1 || true
     exit 0
 fi
@@ -90,7 +110,14 @@ window_id=$(
 )
 
 if [ -n "$window_id" ]; then
+    log "matched-window con_id=$window_id"
     swaymsg "[con_id=${window_id}]" focus >/dev/null 2>&1 || true
+else
+    log "no-window-match id=$id"
+    if printf '%s\n' "$notification" | jq -e '(.actions // {}) | length > 0' >/dev/null; then
+        log "invoke-default-action id=$id"
+        makoctl invoke -n "$id" >/dev/null 2>&1 || true
+    fi
 fi
 
 makoctl dismiss -n "$id" >/dev/null 2>&1 || true

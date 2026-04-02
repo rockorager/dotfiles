@@ -1,0 +1,84 @@
+#!/bin/sh
+
+set -eu
+
+state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/location"
+env_file="$state_dir/wlsunset.env"
+request_file="$state_dir/timezone.request"
+lock_file="$state_dir/lock"
+provider_url="https://ipapi.co/json/"
+coordinate_threshold="0.25"
+
+mkdir -p "$state_dir"
+
+exec 9>"$lock_file"
+if ! flock -n 9; then
+    echo "location-refresh: another refresh is already running"
+    exit 0
+fi
+
+json="$(curl -fsS --max-time 10 "$provider_url")"
+latitude="$(printf '%s' "$json" | jq -er '.latitude')"
+longitude="$(printf '%s' "$json" | jq -er '.longitude')"
+timezone="$(printf '%s' "$json" | jq -er '.timezone')"
+
+within_threshold() {
+    awk -v current="$1" -v next="$2" -v threshold="$3" '
+        BEGIN {
+            delta = current - next
+            if (delta < 0) {
+                delta = -delta
+            }
+            exit !(delta <= threshold)
+        }
+    '
+}
+
+current_lat=""
+current_lon=""
+
+if test -f "$env_file"; then
+    # shellcheck disable=SC1090
+    . "$env_file"
+    current_lat="${WLSUNSET_LAT:-}"
+    current_lon="${WLSUNSET_LON:-}"
+fi
+
+coordinates_changed=1
+if test -n "$current_lat" && test -n "$current_lon"; then
+    if within_threshold "$current_lat" "$latitude" "$coordinate_threshold" \
+        && within_threshold "$current_lon" "$longitude" "$coordinate_threshold"; then
+        coordinates_changed=0
+    fi
+fi
+
+if test "$coordinates_changed" -eq 1; then
+    tmp_env="$(mktemp "$state_dir/wlsunset.env.XXXXXX")"
+    printf 'WLSUNSET_LAT=%s\nWLSUNSET_LON=%s\n' "$latitude" "$longitude" > "$tmp_env"
+    mv "$tmp_env" "$env_file"
+fi
+
+current_timezone=""
+if test -f "$request_file"; then
+    current_timezone="$(tr -d '\n' < "$request_file")"
+fi
+
+if test "$timezone" != "$current_timezone"; then
+    tmp_request="$(mktemp "$state_dir/timezone.request.XXXXXX")"
+    printf '%s\n' "$timezone" > "$tmp_request"
+    mv "$tmp_request" "$request_file"
+fi
+
+if test "$coordinates_changed" -eq 1; then
+    if systemctl --user is-active --quiet wlsunset.service; then
+        if ! systemctl --user restart wlsunset.service; then
+            echo "location-refresh: failed to restart wlsunset.service" >&2
+        fi
+    else
+        if ! systemctl --user start wlsunset.service; then
+            echo "location-refresh: failed to start wlsunset.service" >&2
+        fi
+    fi
+fi
+
+echo "location-refresh: lat=$latitude lon=$longitude timezone=$timezone changed=$coordinates_changed"

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -eu
+
+last_trigger=0
+debounce_seconds=5
+
+stdbuf -oL gdbus monitor --system --dest net.connman.iwd | while IFS= read -r line; do
+    case "$line" in
+        *"PropertiesChanged ('net.connman.iwd.Station', {"*"ConnectedNetwork"*|*"PropertiesChanged ('net.connman.iwd.Station', {"*"State"*)
+            now="$(date +%s)"
+            if test $((now - last_trigger)) -lt "$debounce_seconds"; then
+                continue
+            fi
+
+            last_trigger="$now"
+            systemctl --user start location-refresh.service || true
+            ;;
+    esac
+done

@@ -1,0 +1,6 @@
+[Unit]
+Description=Refresh location-based desktop settings
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/share/dotfiles/bin/location-refresh

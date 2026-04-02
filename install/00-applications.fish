@@ -6,5 +6,10 @@ cp --verbose --no-clobber ~/.local/share/dotfiles/applications/hidden/*.desktop 
 update-desktop-database ~/.local/share/applications
 
 # Services
-cp --verbose --no-clobber ~/.local/share/dotfiles/services/* ~/.config/systemd/user/
-sudo systemctl daemon-reload
+mkdir -p ~/.config/systemd/user
+
+for service in ~/.local/share/dotfiles/services/*
+    ln -sf "$service" ~/.config/systemd/user/
+end
+
+systemctl --user daemon-reload

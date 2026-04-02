@@ -1,0 +1,42 @@
+#!/bin/sh
+
+set -eu
+
+if test "$#" -ne 1; then
+    echo "usage: location-apply-timezone <user>" >&2
+    exit 2
+fi
+
+user="$1"
+home_dir="$(getent passwd "$user" | cut -d: -f6)"
+
+if test -z "$home_dir"; then
+    echo "location-apply-timezone: unknown user: $user" >&2
+    exit 1
+fi
+
+request_file="$home_dir/.local/state/location/timezone.request"
+if ! test -r "$request_file"; then
+    exit 0
+fi
+
+timezone="$(tr -d '\n' < "$request_file")"
+case "$timezone" in
+    ""|*[!A-Za-z0-9_./+-]*)
+        echo "location-apply-timezone: invalid timezone: $timezone" >&2
+        exit 1
+        ;;
+esac
+
+zoneinfo="/usr/share/zoneinfo/$timezone"
+if ! test -e "$zoneinfo"; then
+    echo "location-apply-timezone: missing zoneinfo entry: $timezone" >&2
+    exit 1
+fi
+
+current_timezone="$(timedatectl show --property=Timezone --value)"
+if test "$timezone" = "$current_timezone"; then
+    exit 0
+fi
+
+timedatectl set-timezone "$timezone"

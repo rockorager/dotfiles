@@ -1,0 +1,7 @@
+[Unit]
+Description=Apply requested timezone for %i
+ConditionPathExists=/home/%i/.local/state/location/timezone.request
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/location-apply-timezone %i

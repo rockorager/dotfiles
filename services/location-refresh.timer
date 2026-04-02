@@ -1,0 +1,12 @@
+[Unit]
+Description=Periodically refresh location-based desktop settings
+
+[Timer]
+OnBootSec=2m
+OnUnitActiveSec=4h
+Persistent=true
+RandomizedDelaySec=5m
+Unit=location-refresh.service
+
+[Install]
+WantedBy=timers.target
