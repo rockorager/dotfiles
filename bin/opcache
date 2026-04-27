@@ -1,28 +1,37 @@
 #!/usr/bin/fish
 
-# Check if the required arguments are provided
+# Cache `op read` results in a user-private runtime cache.
+# This avoids repeated slow 1Password CLI reads without putting secrets in shell startup files.
+
 if test (count $argv) -ne 2; or test "$argv[1]" != read
-    echo "Usage: $argv[0] read op://some/path"
+    echo "Usage: $argv[0] read op://some/path" >&2
     exit 1
 end
 
-# Extract the path from the op:// URL
 set url $argv[2]
-set temp_file "/tmp/"(string replace "op://" "" $url)
+set cache_base $XDG_RUNTIME_DIR
 
-# Ensure the directory for the temporary file exists
-mkdir -p (dirname $temp_file)
-
-# Check if the file exists
-if test -f $temp_file
-    cat $temp_file
-else
-    # Read from op first, only create temp file if successful
-    set content (op read $url)
-    if test $status -eq 0
-        echo $content >$temp_file
-        echo $content
-    else
-        exit $status
-    end
+if test -z "$cache_base"
+    set cache_base "$HOME/.cache"
 end
+
+set cache_dir "$cache_base/opcache"
+set cache_key (printf '%s' "$url" | sha256sum | string split ' ' | head -n1)
+set cache_file "$cache_dir/$cache_key"
+
+umask 077
+mkdir -p "$cache_dir"
+chmod 700 "$cache_dir"
+
+if test -f "$cache_file"
+    cat "$cache_file"
+    exit 0
+end
+
+set content (op read "$url")
+if test $status -ne 0
+    exit $status
+end
+
+printf '%s\n' "$content" >"$cache_file"
+cat "$cache_file"
