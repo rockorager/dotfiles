@@ -102,4 +102,12 @@ if [ "$(uname -s)" = Darwin ] && command -v macctl >/dev/null 2>&1; then
         sleep 2
         macctl --user restart postgresql.service
     fi
+    if ! macctl --user enable redis.service; then
+        sleep 2
+        macctl --user enable redis.service
+    fi
+    if ! macctl --user restart redis.service; then
+        sleep 2
+        macctl --user restart redis.service
+    fi
 fi

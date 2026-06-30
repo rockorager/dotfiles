@@ -14,6 +14,7 @@ yay -S --noconfirm --needed \
     man \
     mpv \
     postgresql \
+    redis \
     ripgrep \
     wf-recorder \
     wl-clipboard \
@@ -22,3 +23,4 @@ yay -S --noconfirm --needed \
 
 systemctl enable --now --user 1password.service
 systemctl enable --now --user postgresql.service
+systemctl enable --now --user redis.service
