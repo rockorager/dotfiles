@@ -5,25 +5,17 @@ yay -S --noconfirm --needed \
     1password-cli \
     brightnessctl \
     btop \
-    discord \
     fd \
     github-cli \
     imv \
     less \
     libnotify \
-    libreoffice-fresh \
     lsr-iouring-git \
     man \
     mpv \
-    pavucontrol \
-    playerctl \
     ripgrep \
-    slack-desktop-wayland \
     wf-recorder \
-    wireplumber \
     wl-clipboard \
-    xorg-xwayland \
-    chromium \
-    chromium-widevine
+    xorg-xwayland
 
 systemctl enable --now --user 1password.service

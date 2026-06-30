@@ -43,5 +43,6 @@ printf '%s\n' \
     'HandleLidSwitchDocked=ignore' \
     | sudo tee /etc/systemd/logind.conf.d/lid.conf
 
-sudo ln -s /usr/share/sway-contrib/grimshot /usr/bin/grimshot
-sudo ln -s /usr/share/sway-contrib/grimpicker /usr/bin/grimpicker
+sudo install -d /usr/local/bin
+sudo ln -sf /usr/share/sway-contrib/grimshot /usr/local/bin/grimshot
+sudo ln -sf /usr/share/sway-contrib/grimpicker /usr/local/bin/grimpicker
