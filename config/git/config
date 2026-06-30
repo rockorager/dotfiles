@@ -29,6 +29,10 @@
 [core]
   abbrev = 12
 
+[pager]
+  diff = comview
+  show = comview
+
 [rerere]
   enabled = true
 

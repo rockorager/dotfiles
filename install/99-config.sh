@@ -17,6 +17,7 @@ link_config() {
 mkdir -p "$HOME/.config"
 
 for config in \
+    comlink \
     environment.d \
     fontconfig \
     foot \

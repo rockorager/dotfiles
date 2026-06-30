@@ -16,6 +16,7 @@ yay -S --noconfirm --needed \
     ripgrep \
     wf-recorder \
     wl-clipboard \
-    xorg-xwayland
+    xorg-xwayland \
+    zig
 
 systemctl enable --now --user 1password.service
