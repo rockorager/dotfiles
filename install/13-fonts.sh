@@ -6,5 +6,4 @@ yay -S --noconfirm --needed \
     noto-fonts-emoji \
     ttf-fira-code \
     ttf-font-awesome \
-    ttf-nerd-fonts-symbols \
-    ttf-victor-mono
+    ttf-nerd-fonts-symbols

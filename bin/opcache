@@ -1,37 +1,35 @@
-#!/usr/bin/fish
+#!/bin/sh
 
 # Cache `op read` results in a user-private runtime cache.
 # This avoids repeated slow 1Password CLI reads without putting secrets in shell startup files.
 
-if test (count $argv) -ne 2; or test "$argv[1]" != read
-    echo "Usage: $argv[0] read op://some/path" >&2
+if [ "$#" -ne 2 ] || [ "$1" != read ]; then
+    echo "Usage: $0 read op://some/path" >&2
     exit 1
-end
+fi
 
-set url $argv[2]
-set cache_base $XDG_RUNTIME_DIR
-
-if test -z "$cache_base"
-    set cache_base "$HOME/.cache"
-end
-
-set cache_dir "$cache_base/opcache"
-set cache_key (printf '%s' "$url" | sha256sum | string split ' ' | head -n1)
-set cache_file "$cache_dir/$cache_key"
+url=$2
+cache_base=${XDG_RUNTIME_DIR:-$HOME/.cache}
+cache_dir=$cache_base/opcache
+cache_key=$(printf '%s' "$url" | sha256sum | awk '{print $1}')
+cache_file=$cache_dir/$cache_key
 
 umask 077
 mkdir -p "$cache_dir"
 chmod 700 "$cache_dir"
 
-if test -f "$cache_file"
+if [ -f "$cache_file" ]; then
     cat "$cache_file"
     exit 0
-end
+fi
 
-set content (op read "$url")
-if test $status -ne 0
-    exit $status
-end
+tmp_file=$(mktemp "$cache_dir/.tmp.XXXXXX") || exit 1
+if op read "$url" >"$tmp_file"; then
+    mv "$tmp_file" "$cache_file"
+else
+    status=$?
+    rm -f "$tmp_file"
+    exit "$status"
+fi
 
-printf '%s\n' "$content" >"$cache_file"
 cat "$cache_file"
