@@ -19,8 +19,16 @@ set fish_greeting
 
 set fish_pager_color_progress brblack '--background=cyan'
 
+if test (uname -s) = Darwin
+    set -gx SSH_AUTH_SOCK "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+end
+
 # add 1password completions
-op completion fish | source
+if command -q op
+    op completion fish | source
+end
 
 # activate mise
-mise activate fish | source
+if command -q mise
+    mise activate fish | source
+end

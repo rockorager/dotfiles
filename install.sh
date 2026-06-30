@@ -11,7 +11,7 @@ case $(uname -s) in
 esac
 
 if [ "$platform" = macos ]; then
-    PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+    PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
     export PATH
 fi
 

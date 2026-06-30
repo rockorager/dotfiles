@@ -21,12 +21,16 @@ brew install \
     fd \
     fish \
     fzf \
+    gh \
     git \
     go \
     jq \
     less \
+    lsr \
+    mise \
     neovim \
     ripgrep \
+    tree-sitter-cli \
     zig
 
 install_cask 1password /Applications/1Password.app
