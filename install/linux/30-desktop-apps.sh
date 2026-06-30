@@ -5,4 +5,4 @@ yay -S --noconfirm --needed \
     chromium-widevine \
     discord \
     libreoffice-fresh \
-    slack-desktop-wayland
+    slack-desktop
