@@ -16,4 +16,6 @@ printf '%s\n' '[Resolve]' 'MulticastDNS=no' | sudo tee /etc/systemd/resolved.con
 sudo systemctl enable --now avahi-daemon.service
 
 # Enable mDNS hostname resolution for .local addresses
-sudo sed -i 's/^hosts:.*/hosts: mymachines mdns_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] files myhostname dns/' /etc/nsswitch.conf
+if ! grep -q '^hosts:.*mdns_minimal' /etc/nsswitch.conf; then
+    sudo sed -i 's/^hosts:.*/hosts: mymachines mdns_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] files myhostname dns/' /etc/nsswitch.conf
+fi

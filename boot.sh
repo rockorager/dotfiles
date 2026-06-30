@@ -6,8 +6,13 @@ sudo pacman -S --needed --noconfirm \
   base-devel \
   git
 
-rm -rf "$HOME/.local/share/dotfiles/"
-git clone https://github.com/rockorager/dotfiles "$HOME/.local/share/dotfiles"
+dotfiles_dir="$HOME/.local/share/dotfiles"
+
+if [ -d "$dotfiles_dir/.git" ]; then
+  git -C "$dotfiles_dir" pull
+else
+  git clone https://github.com/rockorager/dotfiles "$dotfiles_dir"
+fi
 
 printf "\nInstallation starting..."
-sh "$HOME/.local/share/dotfiles/install.sh"
+sh "$dotfiles_dir/install.sh"

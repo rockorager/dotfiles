@@ -2,8 +2,10 @@
 
 mkdir -p "$HOME/.local/share/applications"
 
-cp --verbose --no-clobber "$HOME/.local/share/dotfiles"/applications/*.desktop "$HOME/.local/share/applications"
-cp --verbose --no-clobber "$HOME/.local/share/dotfiles"/applications/hidden/*.desktop "$HOME/.local/share/applications"
+for application in "$HOME/.local/share/dotfiles"/applications/*.desktop "$HOME/.local/share/dotfiles"/applications/hidden/*.desktop; do
+    [ -e "$application" ] || continue
+    ln -sf "$application" "$HOME/.local/share/applications/"
+done
 
 update-desktop-database "$HOME/.local/share/applications"
 
