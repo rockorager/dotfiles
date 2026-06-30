@@ -1,6 +1,6 @@
 #!/bin/sh
 
 yay -S --noconfirm --needed \
-    tlp
+    power-profiles-daemon
 
-sudo systemctl enable --now tlp.service
+sudo systemctl enable --now power-profiles-daemon.service

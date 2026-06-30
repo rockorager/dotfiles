@@ -42,3 +42,6 @@ mkdir -p "$HOME/.config/git"
 link_config "$dotfiles_dir/config/git/config" "$HOME/.config/git/config"
 link_config "$dotfiles_dir/config/git/allowed_signers" "$HOME/.config/git/allowed_signers"
 rm -f "$HOME/.config/git/default"
+
+mkdir -p "$HOME/.config/amp/skills"
+link_config "$dotfiles_dir/config/amp/skills/writing-commit-messages" "$HOME/.config/amp/skills/writing-commit-messages"
