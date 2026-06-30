@@ -16,6 +16,3 @@ window-decoration = none
 
 keybind = alt+q=close_surface
 keybind = ctrl+t=new_tab
-
-window-padding-color=extend
-window-padding-balance = true
