@@ -2,6 +2,7 @@
 
 yay -S --noconfirm --needed \
     adwaita-fonts \
+    inter-font \
     noto-fonts \
     noto-fonts-emoji \
     ttf-fira-code \
