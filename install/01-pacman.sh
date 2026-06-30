@@ -1,20 +1,22 @@
+#!/bin/sh
+
 # Function to check if a key exists (uncommented) in the config
-function key_exists
-    set key $argv[1]
+key_exists() {
+    key=$1
     grep -q "^$key\$" /etc/pacman.conf
-end
+}
 
 # Function to add a key to the [options] section
-function add_key
-    set key $argv[1]
+add_key() {
+    key=$1
 
-    if key_exists $key
+    if key_exists "$key"; then
         return 0
-    end
+    fi
 
     # Add the key after the [options] line
     sudo sed -i "/^\\[options\\]/a $key" /etc/pacman.conf
-end
+}
 
 # Add the keys
 echo "Configuring pacman..."

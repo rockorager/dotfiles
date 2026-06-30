@@ -1,3 +1,5 @@
+#!/bin/sh
+
 yay -S --noconfirm --needed \
     adwaita-fonts \
     noto-fonts \
