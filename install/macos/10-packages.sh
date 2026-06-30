@@ -29,6 +29,7 @@ brew install \
     lsr \
     mise \
     neovim \
+    postgresql \
     ripgrep \
     tree-sitter-cli \
     zig

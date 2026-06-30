@@ -1,0 +1,8 @@
+[Unit]
+Description=PostgreSQL database server
+
+[Service]
+Environment=LC_ALL=en_US.UTF-8
+ExecStart=/bin/sh -lc 'data=$POSTGRES_DATA_DIR; [ -n "$data" ] || data=/opt/homebrew/var/postgresql; [ -f "$data/PG_VERSION" ] || data=/opt/homebrew/var/postgresql@18; [ -f "$data/PG_VERSION" ] || /opt/homebrew/opt/postgresql/bin/initdb -D "$data"; exec /opt/homebrew/opt/postgresql/bin/postgres -D "$data" -c listen_addresses=127.0.0.1 -c port=5432'
+Restart=on-failure
+RestartSec=2

@@ -13,6 +13,7 @@ yay -S --noconfirm --needed \
     lsr-iouring-git \
     man \
     mpv \
+    postgresql \
     ripgrep \
     wf-recorder \
     wl-clipboard \
@@ -20,3 +21,4 @@ yay -S --noconfirm --needed \
     zig
 
 systemctl enable --now --user 1password.service
+systemctl enable --now --user postgresql.service

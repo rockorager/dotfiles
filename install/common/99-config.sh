@@ -69,6 +69,9 @@ case $(uname -s) in
             link_config "$dotfiles_dir/config/$config" "$HOME/.config/$config"
         done
         ;;
+    Darwin)
+        link_config "$dotfiles_dir/config/macctl" "$HOME/.config/macctl"
+        ;;
 esac
 
 link_environment
@@ -88,5 +91,15 @@ mkdir -p "$HOME/.config/amp/skills"
 link_config "$dotfiles_dir/config/amp/skills/writing-commit-messages" "$HOME/.config/amp/skills/writing-commit-messages"
 
 if [ "$(uname -s)" = Darwin ] && command -v macctl >/dev/null 2>&1; then
-    macctl --user daemon-reload
+    if ! macctl --user daemon-reload; then
+        printf 'macctl daemon-reload failed; continuing with explicit service setup\n' >&2
+    fi
+    if ! macctl --user enable postgresql.service; then
+        sleep 2
+        macctl --user enable postgresql.service
+    fi
+    if ! macctl --user restart postgresql.service; then
+        sleep 2
+        macctl --user restart postgresql.service
+    fi
 fi
