@@ -64,7 +64,8 @@ for config in \
     comlink \
     fontconfig \
     ghostty \
-    nvim
+    nvim \
+    rush
 do
     link_config "$dotfiles_dir/config/$config" "$HOME/.config/$config"
 done
