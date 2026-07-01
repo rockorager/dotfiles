@@ -25,7 +25,8 @@ input "type:keyboard" {
 	xkb_layout us
 }
 
-output eDP-1 scale 1.5
+# Let kanshi own output layout, and reapply it after Sway reloads.
+exec_always systemctl --user restart kanshi.service
 
 ### Key bindings
 
