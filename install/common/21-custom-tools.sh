@@ -108,7 +108,7 @@ install_github_binary() {
     esac
 
     case $arch in
-        x86_64|amd64) arch_pattern='(x64|amd64)' ;;
+        x86_64|amd64) arch_pattern='(x64|x86_64|amd64)' ;;
         aarch64|arm64) arch_pattern='(arm64|aarch64)' ;;
         *) echo "unsupported $binary architecture: $arch" >&2; exit 1 ;;
     esac
@@ -147,6 +147,7 @@ install_github_binary() {
 
 install_github_binary rockorager/comview comview
 install_github_binary rockorager/zigdoc zigdoc
+install_github_binary neurosnap/zmx zmx
 install_zig_tool rockorager/comlink comlink ReleaseSafe
 zig_0_15_1=$(zig_for_version 0.15.1)
 install_zig_tool rockorager/lsr lsr ReleaseSmall "$zig_0_15_1"
