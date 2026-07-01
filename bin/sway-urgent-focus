@@ -1,0 +1,7 @@
+#!/bin/sh
+
+swaymsg -m -t subscribe '["window"]' | while IFS= read -r event; do
+    id=$(printf '%s\n' "$event" | jq -er 'select(.change == "urgent" and .container.urgent == true) | .container.id' 2>/dev/null) || continue
+
+    swaymsg "[con_id=$id]" focus >/dev/null
+done

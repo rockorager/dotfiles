@@ -32,6 +32,7 @@ systemctl enable --now --user mako.service
 systemctl enable --now --user polkit-gnome.service
 systemctl enable --now --user swaybg.service
 systemctl enable --now --user swayidle.service
+systemctl enable --now --user "$HOME/.local/share/dotfiles/services/sway-urgent-focus.service"
 systemctl enable --now --user waybar.service
 
 # Lid close behavior: suspend on battery, ignore when docked/external power
