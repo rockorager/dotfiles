@@ -44,6 +44,20 @@ link_environment() {
     fi
 }
 
+link_ghostty_platform() {
+    case $(uname -s) in
+        Linux) ghostty_platform=linux ;;
+        Darwin) ghostty_platform=macos ;;
+        *) ghostty_platform= ;;
+    esac
+
+    rm -f "$HOME/.config/ghostty/platform"
+
+    if [ -n "$ghostty_platform" ] && [ -e "$dotfiles_dir/config/ghostty/$ghostty_platform" ]; then
+        link_config "$dotfiles_dir/config/ghostty/$ghostty_platform" "$HOME/.config/ghostty/platform"
+    fi
+}
+
 mkdir -p "$HOME/.config"
 
 for config in \
@@ -54,6 +68,8 @@ for config in \
 do
     link_config "$dotfiles_dir/config/$config" "$HOME/.config/$config"
 done
+
+link_ghostty_platform
 
 case $(uname -s) in
     Linux)
