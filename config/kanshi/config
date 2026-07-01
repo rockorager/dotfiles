@@ -13,6 +13,6 @@ profile "office" {
 }
 
 profile "home" {
-  output DP-1 enable position 0,0 scale 1.5
+  output DP-1 enable position 0,0 scale 1.25
   output eDP-1 disable
 }
