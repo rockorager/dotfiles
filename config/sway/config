@@ -31,7 +31,7 @@ exec_always systemctl --user restart kanshi.service
 ### Key bindings
 
 # Programs
-bindsym $mod+Return exec ghostty +new-window
+bindsym $mod+Return exec ghostty-new-window
 bindsym $mod+p exec /usr/bin/1password --quick-access
 bindsym $mod+Space exec fuzzel
 bindsym $mod+q kill

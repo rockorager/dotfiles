@@ -10,4 +10,5 @@ clipboard-paste-bracketed-safe = false
 cursor-invert-fg-bg=true
 
 window-theme = ghostty
+window-padding-color = background
 config-file = ?platform
