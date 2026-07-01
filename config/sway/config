@@ -137,6 +137,8 @@ bindsym $mod+Shift+0 move container to workspace number 10
 # GTK
 ## Set default cursor theme
 exec gsettings set org.gnome.desktop.interface cursor-theme Adwaita
+## Set default icon theme
+exec gsettings set org.gnome.desktop.interface icon-theme Adwaita
 ## Set default theme
 exec gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
 ## Set prefers dark
