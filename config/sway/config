@@ -30,7 +30,7 @@ output eDP-1 scale 1.5
 ### Key bindings
 
 # Programs
-bindsym $mod+Return exec gdbus call --session --dest com.mitchellh.ghostty --object-path /com/mitchellh/ghostty --method org.gtk.Actions.Activate new-window [] []
+bindsym $mod+Return exec ghostty +new-window
 bindsym $mod+p exec /usr/bin/1password --quick-access
 bindsym $mod+Space exec fuzzel
 bindsym $mod+q kill

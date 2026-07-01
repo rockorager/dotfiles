@@ -10,7 +10,6 @@ yay -S --noconfirm --needed \
     imv \
     less \
     libnotify \
-    lsr-iouring-git \
     man \
     mpv \
     postgresql \

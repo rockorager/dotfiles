@@ -26,7 +26,6 @@ brew install \
     go \
     jq \
     less \
-    lsr \
     mise \
     neovim \
     postgresql \
