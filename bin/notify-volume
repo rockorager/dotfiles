@@ -6,18 +6,22 @@ muted=$(pactl get-sink-mute @DEFAULT_SINK@ | grep -Po '(?<=Mute: )\w+')
 
 if [ "$muted" = "yes" ]; then
     icon=$HOME/.config/mako/icons/audio-volume-muted.svg
-elif [ "$volume" -lt 34 ]; then
+    display_volume=0
+elif [ "$volume" -eq 0 ]; then
+    icon=$HOME/.config/mako/icons/audio-volume-zero.svg
+    display_volume=$volume
+elif [ "$volume" -lt 66 ]; then
     icon=$HOME/.config/mako/icons/audio-volume-low.svg
-elif [ "$volume" -lt 67 ]; then
-    icon=$HOME/.config/mako/icons/audio-volume-medium.svg
+    display_volume=$volume
 else
     icon=$HOME/.config/mako/icons/audio-volume-high.svg
+    display_volume=$volume
 fi
 
 # Send notification with mako hint for progress bar
 notify-send --app-name wp-vol \
     "Volume" \
-    "$volume%" \
+    "$display_volume%" \
     --icon="$icon" \
     --hint=string:x-canonical-private-synchronous:volume \
-    --hint=int:value:"$volume"
+    --hint=int:value:"$display_volume"
