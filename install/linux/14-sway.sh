@@ -23,6 +23,7 @@ yay -S --noconfirm --needed \
     sway-systemd \
     waybar \
     xdg-desktop-portal \
+    xdg-desktop-portal-gtk \
     xdg-desktop-portal-wlr
 
 sudo systemctl enable gdm.service
