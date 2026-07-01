@@ -41,6 +41,7 @@ bindsym Print exec grimshot save anything - | gradia
 # Window rules
 for_window [app_id="float"] floating enable
 for_window [app_id="launcher"] floating enable
+for_window [app_id="be.alexandervanhee.gradia"] floating enable
 for_window [app_id="pavucontrol"] floating enable
 for_window [app_id="zoom"] floating enable
 for_window [app_id="blueman-manager"] floating enable

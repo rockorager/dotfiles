@@ -35,5 +35,6 @@ brew install \
     zig
 
 install_cask 1password /Applications/1Password.app
+install_cask cleanshot '/Applications/CleanShot X.app'
 install_cask font-fira-code ''
 install_cask ghostty /Applications/Ghostty.app
