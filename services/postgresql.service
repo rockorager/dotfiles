@@ -3,7 +3,7 @@ Description=PostgreSQL database server
 
 [Service]
 Type=simple
-ExecStart=/bin/sh -lc 'data=$POSTGRES_DATA_DIR; [ -n "$data" ] || data=%S/postgresql; [ -f "$data/PG_VERSION" ] || /usr/bin/initdb -D "$data" -U %u; exec /usr/bin/postgres -D "$data" -c listen_addresses=127.0.0.1 -c port=5432 -c unix_socket_directories=%t'
+ExecStart=/bin/sh -lc 'data=$POSTGRES_DATA_DIR; [ -n "$data" ] || data=%S/postgresql; if [ ! -f "$data/PG_VERSION" ]; then mkdir -p "$data"; chattr +C "$data" 2>/dev/null || true; /usr/bin/initdb -D "$data" -U %u; fi; exec /usr/bin/postgres -D "$data" -c listen_addresses=127.0.0.1 -c port=5432 -c unix_socket_directories=%t'
 Restart=on-failure
 RestartSec=2
 
