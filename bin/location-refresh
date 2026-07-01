@@ -17,15 +17,18 @@ if ! flock -n 9; then
     exit 0
 fi
 
-json="$(curl -fsS --max-time 10 "$provider_url")"
+if ! json="$(curl -fsS --connect-timeout 2 --max-time 5 "$provider_url" 2>/dev/null)"; then
+    echo "location-refresh: location provider unavailable; keeping previous location"
+    exit 0
+fi
 latitude="$(printf '%s' "$json" | jq -er '.latitude')"
 longitude="$(printf '%s' "$json" | jq -er '.longitude')"
 timezone="$(printf '%s' "$json" | jq -er '.timezone')"
 
 within_threshold() {
-    awk -v current="$1" -v next="$2" -v threshold="$3" '
+    awk -v current="$1" -v candidate="$2" -v threshold="$3" '
         BEGIN {
-            delta = current - next
+            delta = current - candidate
             if (delta < 0) {
                 delta = -delta
             }
