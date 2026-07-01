@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Chromium
-Exec=/usr/bin/chromium --enable-features=UseOzonePlatform --ozone-platform=wayland %U
+Exec=/usr/bin/chromium --enable-features=UseOzonePlatform --ozone-platform=wayland --disable-features=WaylandFractionalScaleV1 %U
 Terminal=false
 Type=Application
 Icon=chromium
