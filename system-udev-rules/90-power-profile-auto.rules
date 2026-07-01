@@ -1,0 +1,2 @@
+# Re-apply the preferred power profile whenever AC/USB power supplies change.
+ACTION=="add|change", SUBSYSTEM=="power_supply", TEST=="online", TAG+="systemd", ENV{SYSTEMD_WANTS}+="power-profile-auto.service"

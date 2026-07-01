@@ -1,0 +1,65 @@
+#!/bin/sh
+
+set -eu
+
+external_power_online() {
+    for supply in /sys/class/power_supply/*; do
+        test -r "$supply/type" || continue
+        test -r "$supply/online" || continue
+
+        type="$(cat "$supply/type")"
+        case "$type" in
+            Mains|USB*) ;;
+            *) continue ;;
+        esac
+
+        if test -r "$supply/scope" && test "$(cat "$supply/scope")" != System; then
+            continue
+        fi
+
+        if test "$(cat "$supply/online")" = 1; then
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+profile_available() {
+    powerprofilesctl list \
+        | sed 's/^[[:space:]]*//; s/^\* //; s/:.*//' \
+        | grep -Fx "$1" >/dev/null
+}
+
+set_cpu_governor() {
+    governor=$1
+
+    for governor_file in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do
+        test -w "$governor_file" || continue
+
+        available_file="$(dirname "$governor_file")/scaling_available_governors"
+        if test -r "$available_file" \
+            && ! tr ' ' '\n' < "$available_file" | grep -Fx "$governor" >/dev/null; then
+            continue
+        fi
+
+        printf '%s\n' "$governor" > "$governor_file"
+    done
+}
+
+if external_power_online; then
+    target=performance
+    if ! profile_available "$target"; then
+        target=balanced
+    fi
+    governor=performance
+else
+    target=balanced
+    governor=powersave
+fi
+
+if test "$(powerprofilesctl get)" != "$target"; then
+    powerprofilesctl set "$target"
+fi
+
+set_cpu_governor "$governor"
