@@ -1,4 +1,4 @@
-default-timeout=5000
+default-timeout=0
 ignore-timeout=1
 font=Adwaita Sans 11
 layer=overlay
@@ -23,9 +23,11 @@ anchor=top-right
 [app-name=wp-vol]
 anchor=bottom-center
 outer-margin=0,0,120,0
+default-timeout=1000
 format=
 
 [app-name=wp-brightness]
 anchor=bottom-center
 outer-margin=0,0,120,0
+default-timeout=1000
 format=

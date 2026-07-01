@@ -61,6 +61,11 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+Shift+e exec powermenu
 bindsym $mod+Shift+c reload
 
+# Notifications
+bindsym $mod+n exec sh -c 'makoctl invoke; makoctl dismiss'
+bindsym $mod+Shift+n exec makoctl dismiss
+bindsym $mod+Ctrl+n exec makoctl restore
+
 # Scratchpad
 bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
