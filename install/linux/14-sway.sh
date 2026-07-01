@@ -18,6 +18,7 @@ yay -S --noconfirm --needed \
     swaybg \
     swaylock \
     swayidle \
+    swayosd \
     sway-contrib \
     sway-systemd \
     waybar \
@@ -33,6 +34,7 @@ systemctl enable --now --user polkit-gnome.service
 systemctl enable --now --user swaybg.service
 systemctl enable --now --user swayidle.service
 systemctl enable --now --user "$HOME/.local/share/dotfiles/services/sway-urgent-focus.service"
+systemctl enable --now --user "$HOME/.local/share/dotfiles/services/swayosd.service"
 systemctl enable --now --user waybar.service
 
 # Lid close behavior: suspend on battery, ignore when docked/external power

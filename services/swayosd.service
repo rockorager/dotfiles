@@ -1,0 +1,12 @@
+[Unit]
+Description=SwayOSD server
+PartOf=sway-session.target
+After=sway-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/swayosd-server
+Restart=always
+
+[Install]
+WantedBy=sway-session.target
