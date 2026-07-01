@@ -17,6 +17,9 @@ set -g hydro_symbol_prompt " "
 # disable greeting
 set fish_greeting
 
+set -gx XDG_STATE_HOME $HOME/.local/state
+set -gx GH_CONFIG_DIR $XDG_STATE_HOME/gh
+
 set fish_pager_color_progress brblack '--background=cyan'
 
 if test (uname -s) = Darwin
