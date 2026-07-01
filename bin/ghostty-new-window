@@ -1,15 +1,34 @@
 #!/bin/sh
 
-if gdbus call \
-    --session \
-    --dest com.mitchellh.ghostty \
-    --object-path /com/mitchellh/ghostty \
-    --method org.gtk.Actions.Activate \
-    new-window \
-    "[]" \
-    "{}" >/dev/null 2>&1
-then
-    exit 0
+focused_app_id=$(swaymsg -t get_tree 2>/dev/null | jq -r '
+    .. | objects | select(.focused? == true) |
+    .app_id // .window_properties.class // empty
+' 2>/dev/null)
+
+case "$focused_app_id" in
+    com.mitchellh.ghostty|com.mitchellh.ghostty-debug)
+        ghostty_window_path=$(gdbus introspect \
+            --session \
+            --dest com.mitchellh.ghostty \
+            --object-path /com/mitchellh/ghostty/window 2>/dev/null | \
+            awk '/node [0-9]+/ { gsub(/[{};]/, "", $2); print "/com/mitchellh/ghostty/window/" $2; exit }')
+
+        if gdbus call \
+            --session \
+            --dest com.mitchellh.ghostty \
+            --object-path "$ghostty_window_path" \
+            --method org.gtk.Actions.Activate \
+            new-window \
+            "[]" \
+            "{}" >/dev/null 2>&1
+        then
+            exit 0
+        fi
+        ;;
+esac
+
+if command -v ghostty >/dev/null 2>&1; then
+    exec ghostty +new-window --working-directory=home "$@"
 fi
 
 exec ghostty
