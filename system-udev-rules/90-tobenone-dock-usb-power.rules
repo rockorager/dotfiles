@@ -1,0 +1,11 @@
+# Keep the Tobenone dock's internal USB hubs awake.
+#
+# On Linux, the dock's downstream VIA Labs USB2/USB3 hubs can runtime-suspend
+# while the dock is otherwise connected and working.  When that happens, some
+# physical USB ports stop enumerating devices even though the same ports work on
+# macOS.  Forcing these hub chips to power/control=on matches the live fix that
+# restored the missing ports, without disabling autosuspend for unrelated USB
+# devices.
+ACTION=="add|change", SUBSYSTEM=="usb", DEVTYPE=="usb_device", ATTR{idVendor}=="2109", ATTR{idProduct}=="0817", TEST=="power/control", ATTR{power/control}="on"
+ACTION=="add|change", SUBSYSTEM=="usb", DEVTYPE=="usb_device", ATTR{idVendor}=="2109", ATTR{idProduct}=="2817", TEST=="power/control", ATTR{power/control}="on"
+ACTION=="add|change", SUBSYSTEM=="usb", DEVTYPE=="usb_device", ATTR{idVendor}=="1a40", ATTR{idProduct}=="0801", TEST=="power/control", ATTR{power/control}="on"
