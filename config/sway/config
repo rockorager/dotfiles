@@ -16,7 +16,7 @@ input "type:touchpad" {
 	click_method clickfinger
 	tap enabled
 	natural_scroll disabled
-	scroll_factor 0.5
+	scroll_factor 0.3
 }
 
 input "type:keyboard" {
