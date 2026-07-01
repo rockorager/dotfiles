@@ -20,6 +20,9 @@ padding=16
 
 anchor=top-right
 
+[desktop-entry=slack]
+on-button-left=exec $HOME/.local/share/dotfiles/bin/mako-activate "$id"
+
 [app-name=wp-vol]
 anchor=bottom-center
 outer-margin=0,0,120,0

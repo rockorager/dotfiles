@@ -62,7 +62,7 @@ bindsym $mod+Shift+e exec powermenu
 bindsym $mod+Shift+c reload
 
 # Notifications
-bindsym $mod+n exec sh -c 'makoctl invoke; makoctl dismiss'
+bindsym $mod+n exec mako-activate
 bindsym $mod+Shift+n exec makoctl dismiss
 bindsym $mod+Ctrl+n exec makoctl restore
 

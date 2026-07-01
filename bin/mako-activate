@@ -1,0 +1,23 @@
+#!/bin/sh
+
+id=${1:-}
+
+if [ -n "$id" ]; then
+    notification=$(makoctl list -j | jq -er --argjson id "$id" '.[] | select(.id == $id)' 2>/dev/null) || exit 0
+else
+    notification=$(makoctl list -j | jq -er '.[0]' 2>/dev/null) || exit 0
+    id=$(printf '%s\n' "$notification" | jq -r '.id')
+fi
+
+desktop_entry=$(printf '%s\n' "$notification" | jq -r '.desktop_entry // ""')
+app_name=$(printf '%s\n' "$notification" | jq -r '.app_name // ""')
+
+makoctl invoke -n "$id" >/dev/null 2>&1 || true
+
+case "$desktop_entry:$app_name" in
+    slack:*|*:Slack)
+        swaymsg '[app_id="slack"] focus' >/dev/null 2>&1 || true
+        ;;
+esac
+
+makoctl dismiss -n "$id" >/dev/null 2>&1 || true
