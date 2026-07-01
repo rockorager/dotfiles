@@ -80,7 +80,8 @@ case $(uname -s) in
             mako \
             sway \
             swaylock \
-            waybar
+            waybar \
+            xdg-desktop-portal-wlr
         do
             link_config "$dotfiles_dir/config/$config" "$HOME/.config/$config"
         done
