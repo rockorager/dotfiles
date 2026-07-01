@@ -17,14 +17,7 @@ set -g hydro_symbol_prompt " "
 # disable greeting
 set fish_greeting
 
-set -gx XDG_STATE_HOME $HOME/.local/state
-set -gx GH_CONFIG_DIR $XDG_STATE_HOME/gh
-
 set fish_pager_color_progress brblack '--background=cyan'
-
-if test (uname -s) = Darwin
-    set -gx SSH_AUTH_SOCK "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-end
 
 # add 1password completions
 if command -q op
