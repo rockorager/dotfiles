@@ -7,7 +7,7 @@ After=sway-session.target
 [Service]
 Type=simple
 ExecStart=/usr/bin/swayidle -w \
-    timeout 60  'brightnessctl -s set 30%%; brightnessctl --device="tpacpi::kbd_backlight" set 0' \
+    timeout 60  'current=$$(brightnessctl get); max=$$(brightnessctl max); threshold=$$((max * 30 / 100)); target=$$current; if [ "$$current" -gt "$$threshold" ]; then target=$$threshold; fi; brightnessctl -s set "$$target"; brightnessctl --device="tpacpi::kbd_backlight" set 0' \
         resume  'brightnessctl -r; brightnessctl --device="tpacpi::kbd_backlight" set 100%%' \
     timeout 300 'swaylock -f' \
     timeout 600 'swaymsg "output * power off"' \
