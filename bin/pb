@@ -1,0 +1,88 @@
+#!/bin/sh
+
+set -eu
+
+url=${PB_URL:-https://pb.rockorager.dev}
+token_ref=${PB_TOKEN_REF:-op://Private/pb.rockorager.dev/credential}
+stdin_name=paste.txt
+
+usage() {
+    cat <<EOF >&2
+Usage: pb [-n NAME] [FILE...]
+       COMMAND | pb [-n NAME]
+
+Upload files or stdin to $url.
+
+Authentication is read from PB_BEARER, PB_TOKEN, or opcache read $token_ref.
+EOF
+}
+
+while getopts hn: opt; do
+    case $opt in
+        h)
+            usage
+            exit 0
+            ;;
+        n)
+            stdin_name=$OPTARG
+            ;;
+        *)
+            usage
+            exit 2
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+token=${PB_BEARER:-${PB_TOKEN:-}}
+if [ -z "$token" ]; then
+    if ! token=$(opcache read "$token_ref"); then
+        echo "pb: failed to read bearer token from $token_ref" >&2
+        exit 1
+    fi
+fi
+
+if [ -z "$token" ]; then
+    echo "pb: missing bearer token; set PB_BEARER or add $token_ref to 1Password" >&2
+    exit 1
+fi
+
+upload_file() {
+    file=$1
+
+    if [ ! -f "$file" ]; then
+        echo "pb: not a file: $file" >&2
+        return 1
+    fi
+
+    curl -fsS \
+        -H "Authorization: Bearer $token" \
+        -F "file=@$file" \
+        "$url"
+}
+
+upload_stdin() {
+    curl -fsS \
+        -H "Authorization: Bearer $token" \
+        -F "file=@-;filename=$stdin_name" \
+        "$url"
+}
+
+if [ "$#" -eq 0 ]; then
+    if [ -t 0 ]; then
+        usage
+        exit 2
+    fi
+
+    upload_stdin
+    exit
+fi
+
+status=0
+for file in "$@"; do
+    if ! upload_file "$file"; then
+        status=1
+    fi
+done
+
+exit "$status"
