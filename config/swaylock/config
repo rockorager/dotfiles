@@ -1,7 +1,7 @@
 # Tokyo Night themed swaylock config
 
 # Background
-image=~/.local/share/dotfiles/backgrounds/tokyonight.jpg
+image=~/.local/share/dotfiles/backgrounds/keywork-wave.png
 scaling=fill
 
 # Ring - always visible
