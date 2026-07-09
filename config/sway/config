@@ -37,14 +37,13 @@ exec_always systemctl --user restart kanshi.service
 # Programs
 bindsym $mod+Return exec monstar
 bindsym $mod+p exec /usr/bin/1password --quick-access
-bindsym $mod+Space exec keywork-launcher
+bindsym $mod+Space exec keywork-shell launcher
 bindsym $mod+q kill
 
 bindsym Print exec grimshot save anything - | gradia
 
 # Window rules
 for_window [app_id="float"] floating enable
-for_window [app_id="launcher"] floating enable
 for_window [app_id="be.alexandervanhee.gradia"] floating enable
 for_window [app_id="pavucontrol"] floating enable
 for_window [app_id="zoom"] floating enable

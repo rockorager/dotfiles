@@ -32,15 +32,16 @@ clone_or_pull() {
 mkdir -p "$src_dir"
 
 clone_or_pull rockorager/keywork "$src_dir/keywork"
-clone_or_pull rockorager/keywork-bar "$src_dir/keywork-bar"
-clone_or_pull rockorager/keywork-launcher "$src_dir/keywork-launcher"
+clone_or_pull rockorager/keywork-shell "$src_dir/keywork-shell"
 
 old_pwd=$PWD
 cd "$src_dir/keywork"
 zig build install -Doptimize=ReleaseSafe --prefix "$HOME/.local"
 cd "$old_pwd"
 
-make -C "$src_dir/keywork-bar" install
-make -C "$src_dir/keywork-launcher" install
+make -C "$src_dir/keywork-shell" install
 
-systemctl enable --now --user keywork-bar.service
+# keywork-shell replaces the standalone keywork-bar + keywork-launcher.
+systemctl disable --now --user keywork-bar.service 2>/dev/null || true
+
+systemctl enable --now --user keywork-shell.service
