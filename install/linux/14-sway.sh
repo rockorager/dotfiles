@@ -36,7 +36,8 @@ systemctl enable --now --user swaybg.service
 systemctl enable --now --user swayidle.service
 systemctl enable --now --user "$HOME/.local/share/dotfiles/services/sway-urgent-focus.service"
 systemctl enable --now --user "$HOME/.local/share/dotfiles/services/swayosd.service"
-systemctl enable --now --user waybar.service
+# Temporarily disabled in favor of keywork-bar (see 21-keywork-bar.sh)
+# systemctl enable --now --user waybar.service
 
 # Lid close behavior: suspend on battery, ignore when docked/external power
 sudo mkdir -p /etc/systemd/logind.conf.d
