@@ -2,15 +2,16 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "tokyonight-night",
+      colorscheme = "radix-dark",
     },
   },
   {
-    "folke/tokyonight.nvim",
-    lazy = true,
+    "rockorager/radix.nvim",
+    lazy = false,
+    priority = 1000,
     opts = {
-      style = "night",
-      transparent = true,
+      style = "dark",
+      transparent = false,
     },
   },
   {
