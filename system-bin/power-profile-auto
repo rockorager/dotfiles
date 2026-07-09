@@ -2,6 +2,12 @@
 
 set -eu
 
+lock=/run/power-profile-auto.lock
+if ! mkdir "$lock" 2>/dev/null; then
+    exit 0
+fi
+trap 'rmdir "$lock"' EXIT INT TERM
+
 external_power_online() {
     for supply in /sys/class/power_supply/*; do
         test -r "$supply/type" || continue
@@ -43,8 +49,48 @@ set_cpu_governor() {
             continue
         fi
 
-        printf '%s\n' "$governor" > "$governor_file"
+        if ! printf '%s\n' "$governor" > "$governor_file"; then
+            echo "power-profile-auto: failed to set $governor_file to $governor" >&2
+        fi
     done
+}
+
+set_energy_performance_preference() {
+    preference=$1
+
+    for preference_file in /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference; do
+        test -w "$preference_file" || continue
+
+        available_file="$(dirname "$preference_file")/energy_performance_available_preferences"
+        if test -r "$available_file" \
+            && ! tr ' ' '\n' < "$available_file" | grep -Fx "$preference" >/dev/null; then
+            continue
+        fi
+
+        if ! printf '%s\n' "$preference" > "$preference_file"; then
+            echo "power-profile-auto: failed to set $preference_file to $preference" >&2
+        fi
+    done
+}
+
+set_power_profile() {
+    profile=$1
+    current=$(powerprofilesctl get)
+
+    test "$current" = "$profile" && return 0
+
+    # power-profiles-daemon can briefly report the CPU driver as busy while
+    # several power-supply udev events arrive around plug/unplug or resume.
+    # Retrying keeps the service from failing on that transient race.
+    for delay in 0 1 2; do
+        test "$delay" = 0 || sleep "$delay"
+        if powerprofilesctl set "$profile"; then
+            return 0
+        fi
+    done
+
+    echo "power-profile-auto: powerprofilesctl could not set $profile; applying CPU tuning directly" >&2
+    return 0
 }
 
 if external_power_online; then
@@ -53,13 +99,14 @@ if external_power_online; then
         target=balanced
     fi
     governor=performance
+    preference=performance
 else
     target=balanced
     governor=powersave
+    preference=balance_power
 fi
 
-if test "$(powerprofilesctl get)" != "$target"; then
-    powerprofilesctl set "$target"
-fi
+set_power_profile "$target"
 
 set_cpu_governor "$governor"
+set_energy_performance_preference "$preference"
