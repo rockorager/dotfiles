@@ -1,9 +1,12 @@
 # Old habits
 abbr vi nvim
 abbr vim nvim
+abbr gs 'git status'
 
 # ls shortcuts
 abbr ls lsr
 abbr la 'lsr --almost-all'
 abbr ll 'lsr --almost-all --long'
 abbr lt 'lsr --tree'
+
+event add directory.change mise rush_mise_hook
