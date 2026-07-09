@@ -12,7 +12,7 @@ profile "office" {
   output eDP-1 disable
 }
 
-profile "home" {
-  output DP-1 enable position 0,0 scale 1.25
+profile "acer-kg272k" {
+  output "Acer Technologies KG272K L 1509045DC4201" enable position 0,0 scale 1.25
   output eDP-1 disable
 }
