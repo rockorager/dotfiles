@@ -30,12 +30,11 @@ sudo systemctl enable gdm.service
 
 systemctl enable --now --user autotiling.service
 systemctl enable --now --user kanshi.service
-systemctl enable --now --user mako.service
 systemctl enable --now --user polkit-gnome.service
 systemctl enable --now --user swaybg.service
 systemctl enable --now --user swayidle.service
 systemctl enable --now --user "$HOME/.local/share/dotfiles/services/sway-urgent-focus.service"
-systemctl enable --now --user "$HOME/.local/share/dotfiles/services/swayosd.service"
+# Notifications and hardware OSD are provided by keywork-shell.
 # Temporarily disabled in favor of keywork-shell (see 21-keywork-shell.sh)
 # systemctl enable --now --user waybar.service
 

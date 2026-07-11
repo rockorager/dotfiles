@@ -41,7 +41,10 @@ cd "$old_pwd"
 
 make -C "$src_dir/keywork-shell" install
 
-# keywork-shell replaces the standalone keywork-bar + keywork-launcher.
-systemctl disable --now --user keywork-bar.service 2>/dev/null || true
+# Disable services replaced by keywork-shell when upgrading an existing system.
+for service in keywork-bar.service mako.service swayosd.service; do
+    systemctl disable --now --user "$service" 2>/dev/null || true
+done
 
-systemctl enable --now --user keywork-shell.service
+systemctl enable --user keywork-shell.service
+systemctl restart --user keywork-shell.service

@@ -61,38 +61,30 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+Shift+e exec powermenu
 bindsym $mod+Shift+c reload
 
-# Notifications
-bindsym $mod+n exec mako-activate
-bindsym $mod+Shift+n exec makoctl dismiss
-bindsym $mod+Ctrl+n exec makoctl restore
-
 # Scratchpad
 bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
 # Brightness
-bindsym --locked XF86MonBrightnessDown exec swayosd-client --brightness -5
-bindsym --locked XF86MonBrightnessUp exec swayosd-client --brightness +5
+bindsym --locked XF86MonBrightnessDown exec keywork-shell brightness down
+bindsym --locked XF86MonBrightnessUp exec keywork-shell brightness up
 bindsym --locked XF86KbdBrightnessUp   exec brightnessctl --device='tpacpi::kbd_backlight' set 20%+
 bindsym --locked XF86KbdBrightnessDown exec brightnessctl --device='tpacpi::kbd_backlight' set 20%-
 
 # Volume
-bindsym --locked XF86AudioMute exec swayosd-client --output-volume mute-toggle --max-volume 100
-bindsym --locked XF86AudioLowerVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && swayosd-client --output-volume -5 --max-volume 100
-bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && swayosd-client --output-volume +5 --max-volume 100
+bindsym --locked XF86AudioMute exec keywork-shell volume mute
+bindsym --locked XF86AudioLowerVolume exec keywork-shell volume down
+bindsym --locked XF86AudioRaiseVolume exec keywork-shell volume up
 
 # Microphone
-bindsym --locked Shift+XF86AudioMute exec swayosd-client --input-volume mute-toggle
-bindsym --locked Shift+XF86AudioLowerVolume exec swayosd-client --input-volume -5
-bindsym --locked Shift+XF86AudioRaiseVolume exec swayosd-client --input-volume +5
+bindsym --locked Shift+XF86AudioMute exec keywork-shell microphone mute
+bindsym --locked Shift+XF86AudioLowerVolume exec keywork-shell microphone down
+bindsym --locked Shift+XF86AudioRaiseVolume exec keywork-shell microphone up
 
 # Media buttons
-bindsym XF86AudioPlay exec swayosd-client --playerctl play-pause
-bindsym XF86AudioNext exec swayosd-client --playerctl next
-bindsym XF86AudioPrev exec swayosd-client --playerctl prev
-
-# Lock keys
-bindsym --release Caps_Lock exec swayosd-client --caps-lock
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
 
 # Moving around:
 
