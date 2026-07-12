@@ -11,6 +11,9 @@ client.focused $accent $accent $accent $accent
 default_border pixel 2
 smart_borders on
 
+# Backgrounds are managed by keywork-shell.
+swaybg_command -
+
 input "type:touchpad" {
 	dwt enabled
 	click_method clickfinger

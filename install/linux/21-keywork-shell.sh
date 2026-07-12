@@ -42,9 +42,10 @@ cd "$old_pwd"
 make -C "$src_dir/keywork-shell" install
 
 # Disable services replaced by keywork-shell when upgrading an existing system.
-for service in keywork-bar.service mako.service swayosd.service; do
+for service in keywork-bar.service mako.service swaybg.service swayosd.service; do
     systemctl disable --now --user "$service" 2>/dev/null || true
 done
 
 systemctl enable --user keywork-shell.service
 systemctl restart --user keywork-shell.service
+systemctl enable --now --user "$HOME/.local/share/dotfiles/services/keywork-shell-background.service"
