@@ -11,7 +11,8 @@ yay -S --noconfirm --needed \
     libxkbcommon \
     luajit \
     vulkan-icd-loader \
-    wayland
+    wayland \
+    wayland-protocols
 
 src_dir="$HOME/.local/share/src"
 
@@ -40,9 +41,10 @@ zig build install -Doptimize=ReleaseSafe --prefix "$HOME/.local"
 cd "$old_pwd"
 
 make -C "$src_dir/keywork-shell" install
+sudo make -C "$src_dir/keywork-shell" install-pam
 
 # Disable services replaced by keywork-shell when upgrading an existing system.
-for service in keywork-bar.service mako.service swaybg.service swayosd.service; do
+for service in keywork-bar.service mako.service swaybg.service swayidle.service swayosd.service; do
     systemctl disable --now --user "$service" 2>/dev/null || true
 done
 

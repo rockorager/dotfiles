@@ -41,6 +41,7 @@ exec_always systemctl --user restart kanshi.service
 bindsym $mod+Return exec monstar
 bindsym $mod+p exec /usr/bin/1password --quick-access
 bindsym $mod+Space exec keywork-shell launcher
+bindsym Ctrl+$mod+q exec keywork-shell lock
 bindsym $mod+q kill
 
 bindsym Print exec grimshot save anything - | gradia

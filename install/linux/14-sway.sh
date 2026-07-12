@@ -16,7 +16,6 @@ yay -S --noconfirm --needed \
     slurp \
     sway \
     swaylock \
-    swayidle \
     swayosd \
     sway-contrib \
     sway-systemd \
@@ -30,7 +29,6 @@ sudo systemctl enable gdm.service
 systemctl enable --now --user autotiling.service
 systemctl enable --now --user kanshi.service
 systemctl enable --now --user polkit-gnome.service
-systemctl enable --now --user swayidle.service
 systemctl enable --now --user "$HOME/.local/share/dotfiles/services/sway-urgent-focus.service"
 # Notifications and hardware OSD are provided by keywork-shell.
 # Temporarily disabled in favor of keywork-shell (see 21-keywork-shell.sh)
